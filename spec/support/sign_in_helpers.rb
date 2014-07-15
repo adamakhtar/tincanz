@@ -10,5 +10,5 @@ end
 
 RSpec.configure do |c|
   c.include Warden::Test::Helpers
-  c.include SignInHelpers, :type => :request
+  c.include SignInHelpers, :type => :feature
 end

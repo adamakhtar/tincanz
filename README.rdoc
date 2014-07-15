@@ -25,7 +25,7 @@ Possible usecases
 - Behaviour: user who signed up but hasnt created any projects
 - Message: 'Create your first project in seconds...'
 
-## How it works
+## How it Works
 
 *Proposed usage - will probably change*
 
@@ -83,6 +83,25 @@ end
 Tincanz doesnt include event functionality as end users will probably already have something in place. Perhaps your own custom rolled Event Model or you use a gem such as the exellent Ahoy.
 
 **Behviour based messages** are sent only once regardless of how many times a user repeats the behaviour. This avoids the risk of spamming a user.
+
+
+## Install
+
+```ruby
+gem 'tincanz'
+```
+
+``` 
+bundle install
+```
+
+In your apps application_controller.rb 
+
+```ruby
+def tincanz_user
+   current_user # or your own method that returns the current user
+end
+```
 
 ## Roadmap
 

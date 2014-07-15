@@ -11,6 +11,9 @@ require "sprockets/railtie"
 Bundler.require(*Rails.groups)
 require "tincanz"
 
+require "devise"
+require "devise/rails"
+
 module Dummy
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

@@ -1,0 +1,4 @@
+en:
+  tincanz:
+    errors: 
+      unauthenticated: 'You need to sign in first.'
