@@ -1,0 +1,106 @@
+= Tincanz
+
+# What is Tincanz
+
+Tincanz is the better way to communicate with your users and keep them engaged. It's a very simple open source version of intercom.io. 
+
+Tincanz has two big features
+
+- Communicate with your users directly within your app
+- Segment your users based on predetermined behaviour and automatically send them messages when they behave like that. 
+
+## Communicate with your users
+
+Tincanz creates a little intercom button at the bottom right of your views. When clicked your users will be presented with a message widget where they can message you and read your replies.
+
+## Segment your users
+
+Tincanz lets you define user behaviours. When a user behaves as defined, a predefined message can be automatically sent to them.
+
+Possible usecases
+
+- Behaviour: user who has just signed up
+- Message: 'Welcome aboard...'
+
+- Behaviour: user who signed up but hasnt created any projects
+- Message: 'Create your first project in seconds...'
+
+## How it works
+
+*Proposed usage - will probably change*
+
+First define user behaviours in the Behaviour class
+
+class Behaviour
+  define 'just signed up', message: :welcome  do |c|
+    User.joined_today
+  end
+end
+
+Then define your message in a Messenger class
+
+class UserMessenger
+  def welcome(user)
+    message[:subject] = 'Welcome Aboard'
+  end
+end
+
+And the actual message body in its view file
+
+#tincanz/messengers/user/welcome.txt.erb
+
+Hi {{user.first_name}},
+
+Welcome to the app.....
+
+## Works great with events
+
+To get the most out of tincanz you'll probably want some way of representing events such as
+
+- user created first task
+- user signed in
+- user destroyed a project
+
+So in your tasks controller you could write
+
+def create
+  ...
+  if @task.save
+    Event.create('task created')
+    ...
+  ...
+end
+
+and then in your Behaviour class you can define
+
+class Behaviour
+
+  define 'created first task', message: :task_shortcuts_howto do
+    User.include(:events).where('events.name' => 'task created').....
+  end
+end
+
+Tincanz doesnt include event functionality as end users will probably already have something in place. Perhaps your own custom rolled Event Model or you use a gem such as the exellent Ahoy.
+
+**Behviour based messages** are sent only once regardless of how many times a user repeats the behaviour. This avoids the risk of spamming a user.
+
+## Roadmap
+
+- Setup basic inapp messaging
+- Rollout behaviours
+- Automaticaly email message updates and allow admin and users to reply via email 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
