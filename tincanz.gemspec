@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Tincanz::VERSION
   s.authors     = ["Adam Akhtar"]
   s.email       = ["Adamsubscribe@googlemail.com"]
-  s.homepage    = "TODO"
+  s.homepage    = "https://github.com/robodisco/tincanz"
   s.summary     = "Segment and message users based on behaviour"
   s.description = "Tincanz is a poor mans intercom.io. It allows you to interact with your users from within your own app and schedule messages to be sent on predefined user behaviour."
   s.license     = "MIT"
@@ -19,4 +19,6 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 4.1.1"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rspec-rails", '~>3.0.0'
+  s.add_development_dependency 'capybara', '~>2.4.0'
 end
