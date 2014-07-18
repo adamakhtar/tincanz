@@ -1,0 +1,14 @@
+<table class="conversations-list table table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>User</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= @conversations.each do |conversation| %>
+      <%= content_tag_for :tr, conversation do %>
+        <td class="subject"><%= link_to conversation.subject, admin_conversation_path(conversation) %></td>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

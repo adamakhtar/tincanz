@@ -11,7 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140715055612) do
+ActiveRecord::Schema.define(version: 20140718042225) do
+
+  create_table "tincanz_conversations", force: true do |t|
+    t.string   "subject"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tincanz_conversations", ["user_id"], name: "index_tincanz_conversations_on_user_id"
+
+  create_table "tincanz_messages", force: true do |t|
+    t.text     "content"
+    t.integer  "conversation_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tincanz_messages", ["conversation_id"], name: "index_tincanz_messages_on_conversation_id"
+  add_index "tincanz_messages", ["user_id"], name: "index_tincanz_messages_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
