@@ -6,5 +6,7 @@ module Tincanz
     validates :user, presence: true
     validates :conversation, presence: true
     validates :content, presence: true
+
+    scope :most_recent, -> { order 'created_at DESC' }
   end
 end

@@ -10,5 +10,10 @@ module Tincanz
       @conversations = Conversation.all
       respond_with @conversations
     end
+
+    def show
+      @conversation = Conversation.find(params[:id])
+      @messages     = @conversation.messages.most_recent
+    end
   end
 end
