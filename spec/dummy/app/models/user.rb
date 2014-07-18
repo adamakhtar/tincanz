@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable
 
+  acts_as_tincanz_user
+
   def can_manage_tincanz?
     self.admin
   end

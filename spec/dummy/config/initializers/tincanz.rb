@@ -1,0 +1,1 @@
+Tincanz.user_class = "User"

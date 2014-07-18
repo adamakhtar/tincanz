@@ -1,8 +1,9 @@
 require "tincanz/engine"
+require "tincanz/models"
 
 module Tincanz
 
-   mattr_accessor :sign_in_path
+   mattr_accessor :sign_in_path, :user_class
 
    class << self
 
