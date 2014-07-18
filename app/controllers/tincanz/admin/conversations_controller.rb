@@ -14,6 +14,7 @@ module Tincanz
     def show
       @conversation = Conversation.find(params[:id])
       @messages     = @conversation.messages.most_recent
+      @message      = @conversation.messages.build
     end
   end
 end

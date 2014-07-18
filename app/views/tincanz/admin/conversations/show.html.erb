@@ -1,5 +1,27 @@
 <h1><%= @conversation.subject %></h1>
 
-<div class="messages-list">
-  <%= render partial: 'tincanz/admin/messages/message', collection: @conversation.messages.most_recent %>
+<div class="conversation-messages">
+  <h3>Messages</h3>
+  <div class="messages-list">
+    <%= render partial: 'tincanz/admin/messages/message', collection: @conversation.messages.most_recent %>
+  </div>
+
+</div>
+
+<div class="conversation-reply">
+  <h3>Reply</h3>
+  <%= form_for [:admin, @message], url: admin_messages_path do |f| %>
+
+    <%= f.hidden_field :conversation_id, value: @message.conversation_id %>
+
+    <%= f.hidden_field :user_id, value: tincanz_user.id %>
+
+    <div class="form-group">
+      <label for='message_content'>Content</label>
+      <%= f.text_field :content, rows: 5 %>
+    </div>
+              
+    <%= f.submit 'Reply' %>
+
+  <% end %>
 </div>
