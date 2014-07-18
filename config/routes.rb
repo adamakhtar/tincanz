@@ -1,7 +1,7 @@
 Tincanz::Engine.routes.draw do
   
   namespace :admin do
-    resources :users
+    resources :users, only: [:index, :show]
   end
 
 end

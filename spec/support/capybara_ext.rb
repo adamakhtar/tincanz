@@ -14,10 +14,10 @@ module CapybaraExt
   def assert_seen(text, opts={})
     if opts[:within]
       within(selector_for(opts[:within])) do
-        page.should have_content(text)
+        expect(page).to have_content(text)
       end
     else
-      page.should have_content(text)
+      expect(page).to have_content(text)
     end
   end
 
