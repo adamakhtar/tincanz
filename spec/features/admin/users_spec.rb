@@ -1,28 +1,45 @@
+require "rails_helper"
+
 describe 'admin::users', type: :feature do
   let(:admin){ create(:admin) }
-  
-  it 'lists all users' do
-    user_a = create(:user)
-    user_b = create(:user)
 
-    sign_in admin
-
-    visit tincanz.admin_users_path
-    
-    user_emails = Nokogiri::HTML(page.body).css(".users-list tr td.email").map(&:text)
-    expect(user_emails.size).to eq 3
+  context "signed in as normal user" do
+    it 'redirects to root path' do
+      sign_in create(:user)
+      visit tincanz.admin_users_path
+      assert_unauthorized
+    end
   end
+  
+  context "signed in as admin" do
 
-  it 'displays user' do
-    user = create(:user)
-    sign_in admin
+    before do
+      sign_in admin
+    end
+  
+    it 'lists all users' do
+      user_a = create(:user)
+      user_b = create(:user)
 
-    visit tincanz.admin_users_path
+      sign_in admin
 
-    click_link user.tincanz_email
+      visit tincanz.admin_users_path
+      
+      user_emails = Nokogiri::HTML(page.body).css(".users-list tr td.email").map(&:text)
+      expect(user_emails.size).to eq 3
+    end
 
-    expect(page.current_path).to eq tincanz.admin_user_path(user)
+    it 'displays user' do
+      user = create(:user)
+      sign_in admin
 
-    assert_seen(user.email)
+      visit tincanz.admin_users_path
+
+      click_link user.tincanz_email
+
+      expect(page.current_path).to eq tincanz.admin_user_path(user)
+
+      assert_seen(user.email)
+    end
   end
 end

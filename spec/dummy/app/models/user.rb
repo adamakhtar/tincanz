@@ -6,6 +6,6 @@ class User < ActiveRecord::Base
   acts_as_tincanz_user
 
   def can_manage_tincanz?
-    self.admin
+    !!self.admin
   end
 end

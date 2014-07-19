@@ -2,6 +2,7 @@ en:
   tincanz:
     errors: 
       unauthenticated: 'You need to sign in first.'
+      unauthorized: "Sorry you can't access that."
     conversations:
       replied: 'Your reply was delivered.'
       not_replied: 'Could not create your reply.'

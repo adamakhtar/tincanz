@@ -12,6 +12,10 @@ describe 'authentication', type: :feature do
       visit tincanz.admin_users_path
       expect(page.current_path).to eq('/')
     end
+
+    after do
+      Tincanz.sign_in_path = nil
+    end
   end
 
 end

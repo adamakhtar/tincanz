@@ -4,6 +4,7 @@ module Tincanz
   class Admin::MessagesController < ApplicationController
 
     before_filter :authenticate_tincanz_user
+    before_filter :authorize_admin
     
     def create
       @message = Message.new(message_params)
