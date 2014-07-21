@@ -6,3 +6,7 @@ en:
     conversations:
       replied: 'Your reply was delivered.'
       not_replied: 'Could not create your reply.'
+    messages:
+      created: 'Your message was delivered.'
+      not_created: 'Could not create your message.'
+

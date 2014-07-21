@@ -17,5 +17,11 @@ module Tincanz
       @messages     = @conversation.messages.most_recent
       @message      = @conversation.messages.build
     end
+
+    def new
+      @recipient    = User.find(params[:user_id])
+      @conversation = Conversation.new(user: tincanz_user)
+      @message      = @conversation.messages.build(user: @recipient)
+    end
   end
 end

@@ -18,27 +18,30 @@ describe 'admin::conversations', type: :feature do
       sign_in admin
     end
 
-    it 'lists all conversations' do
-      conv_a = create(:conversation)
-      conv_b = create(:conversation)
+    context 'reading conversations' do 
 
-      visit tincanz.admin_conversations_path
-      
-      conversations = Nokogiri::HTML(page.body).css(".conversations-list .subject").map(&:text)
-      expect(conversations.size).to eq 2
-    end
+      it 'lists all' do
+        conv_a = create(:conversation)
+        conv_b = create(:conversation)
 
-    it 'displays conversation' do
-      conv = create(:conversation)
-      message_a = create(:message, content: 'fiz', conversation: conv, created_at: 1.days.ago)
-      message_b = create(:message, content: 'buz', conversation: conv, created_at: 10.days.ago)
+        visit tincanz.admin_conversations_path
+        
+        conversations = Nokogiri::HTML(page.body).css(".conversations-list .subject").map(&:text)
+        expect(conversations.size).to eq 2
+      end
 
-      visit tincanz.admin_conversation_path(conv)
+      it 'displays single' do
+        conv = create(:conversation)
+        message_a = create(:message, content: 'fiz', conversation: conv, created_at: 1.days.ago)
+        message_b = create(:message, content: 'buz', conversation: conv, created_at: 10.days.ago)
 
-      assert_seen(conv.subject)
+        visit tincanz.admin_conversation_path(conv)
 
-      messages = Nokogiri::HTML(page.body).css(".messages-list .content").map(&:text).map(&:strip)
-      expect(messages).to eq [message_a.content, message_b.content]
+        assert_seen(conv.subject)
+
+        messages = Nokogiri::HTML(page.body).css(".messages-list .content").map(&:text).map(&:strip)
+        expect(messages).to eq [message_a.content, message_b.content]
+      end
     end
 
     context "creating a reply" do
@@ -52,7 +55,7 @@ describe 'admin::conversations', type: :feature do
           click_button 'Reply'
         end
 
-        flash_notice!('Your reply was delivered.')
+        flash_notice!('Your message was delivered.')
         assert_seen 'coming atcha!', within: :first_message
       end
 
@@ -65,7 +68,7 @@ describe 'admin::conversations', type: :feature do
           click_button 'Reply'
         end
 
-        flash_alert!('Could not create your reply.')
+        flash_alert!('Could not create your message.')
         expect(page).to_not have_content 'coming atcha!'
       end
     end

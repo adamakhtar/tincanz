@@ -1,4 +1,5 @@
-<tr>
+<tr class="user">
   <td class="email"><%= link_to user.tincanz_email, admin_user_path(user) %></td>
+  <td class="message"><%= link_to 'message', new_admin_message_path(user_id: user.id) %></td>
 </tr>
 

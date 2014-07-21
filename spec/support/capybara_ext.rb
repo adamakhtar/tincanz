@@ -37,6 +37,7 @@ module CapybaraExt
     case identifier
     when :first_message then '.messages-list .message:nth-child(1)'
     when :second_message then '.messages-list .message:nth-child(2)'
+    when :first_user then '.users-list .user:nth-child(1)'
     else
       raise "**** You specified to search within #{identifier}, but you haven't defined it in spec/support/capybara_ext.rb ****"
     end

@@ -6,22 +6,27 @@ module Tincanz
     before_filter :authenticate_tincanz_user
     before_filter :authorize_admin
     
+    def new
+      @message = Message.new
+    end
+
     def create
-      @message = Message.new(message_params)
+      @conversation = Conversation.where(id: params[:conversation_id]).first || Conversation.create(user: tincanz_user)
+      @message = @conversation.messages.new(message_params)
 
       if @message.save
-        flash.notice = t('tincanz.conversations.replied')
+        flash.notice = t('tincanz.messages.created')
+        redirect_to admin_conversation_path(@message.conversation)
       else
-        flash.alert  = t('tincanz.conversations.not_replied')
+        flash.alert  = t('tincanz.messages.not_created')
+         render :new
       end
-
-      redirect_to admin_conversation_path(@message.conversation)
     end
 
     private
 
     def message_params
-      params.require(:message).permit(:conversation_id, :user_id, :content)
+      params.require(:message).permit(:user_id, :content)
     end
   end
 end
