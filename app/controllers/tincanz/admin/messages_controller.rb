@@ -11,8 +11,9 @@ module Tincanz
     end
 
     def create
+      @message      = MessageComposer.compose(message_params.except(:conversation_id))
       @conversation = find_conversation
-      @message = @conversation.messages.new(message_params.except(:conversation_id))
+      @message.conversation = @conversation
 
       if @message.save
         flash.notice = t('tincanz.messages.created')
