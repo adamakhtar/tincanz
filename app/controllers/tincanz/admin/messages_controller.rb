@@ -11,8 +11,8 @@ module Tincanz
     end
 
     def create
-      @conversation = Conversation.where(id: params[:conversation_id]).first || Conversation.create(user: tincanz_user)
-      @message = @conversation.messages.new(message_params)
+      @conversation = find_conversation
+      @message = @conversation.messages.new(message_params.except(:conversation_id))
 
       if @message.save
         flash.notice = t('tincanz.messages.created')
@@ -26,7 +26,12 @@ module Tincanz
     private
 
     def message_params
-      params.require(:message).permit(:user_id, :content)
+      params.require(:message).permit(:conversation_id, :user_id, :content)
+    end
+
+    def find_conversation
+      @conversation = Conversation.where(id: message_params[:conversation_id]).first ||
+                      Conversation.create(user: tincanz_user) 
     end
   end
 end

@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'timecop'
 
 module Tincanz
   RSpec.describe Message, :type => :model do

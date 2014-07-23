@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140718042225) do
+ActiveRecord::Schema.define(version: 20140721093656) do
 
   create_table "tincanz_conversations", force: true do |t|
     t.string   "subject"
@@ -28,9 +28,11 @@ ActiveRecord::Schema.define(version: 20140718042225) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "reply_to_id"
   end
 
   add_index "tincanz_messages", ["conversation_id"], name: "index_tincanz_messages_on_conversation_id"
+  add_index "tincanz_messages", ["reply_to_id"], name: "index_tincanz_messages_on_reply_to_id"
   add_index "tincanz_messages", ["user_id"], name: "index_tincanz_messages_on_user_id"
 
   create_table "users", force: true do |t|

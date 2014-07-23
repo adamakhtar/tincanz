@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'capybara', '~>2.4.0'
   s.add_development_dependency 'devise', '~>3.2.0'
   s.add_development_dependency 'factory_girl_rails', '~>4.4.0'
+  s.add_development_dependency 'timecop'
 end

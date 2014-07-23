@@ -18,35 +18,40 @@ describe 'admin::conversations', type: :feature do
       sign_in admin
     end
 
-    context 'reading conversations' do 
+    it 'lists all' do
+      conv_a = create(:conversation)
+      conv_b = create(:conversation)
 
-      it 'lists all' do
-        conv_a = create(:conversation)
-        conv_b = create(:conversation)
+      visit tincanz.admin_conversations_path
+      
+      conversations = Nokogiri::HTML(page.body).css(".conversations-list .subject").map(&:text)
+      expect(conversations.size).to eq 2
+    end
 
-        visit tincanz.admin_conversations_path
-        
-        conversations = Nokogiri::HTML(page.body).css(".conversations-list .subject").map(&:text)
-        expect(conversations.size).to eq 2
+    context 'displaying instance' do
+      before do 
+        @conv = create(:conversation)
+        @message = create(:message, content: 'hi', conversation: @conv, created_at: 4.days.ago)
+
+        @reply_a = create(:message, reply_to: @message, content: 'hows it going?', conversation: @conv, created_at: 3.days.ago)
+        @reply_b = create(:message, reply_to: @message, content: 'pretty good',    conversation: @conv, created_at: 2.days.ago)
       end
 
-      it 'displays single' do
-        conv = create(:conversation)
-        message_a = create(:message, content: 'fiz', conversation: conv, created_at: 1.days.ago)
-        message_b = create(:message, content: 'buz', conversation: conv, created_at: 10.days.ago)
+      it 'displays first message' do
+        visit tincanz.admin_conversation_path(@conv)
+        assert_seen @message.content, within: :conversation_message
+      end
 
-        visit tincanz.admin_conversation_path(conv)
-
-        assert_seen(conv.subject)
-
-        messages = Nokogiri::HTML(page.body).css(".messages-list .content").map(&:text).map(&:strip)
-        expect(messages).to eq [message_a.content, message_b.content]
+      it 'shows replies' do
+        visit tincanz.admin_conversation_path(@conv)
+        messages = Nokogiri::HTML(page.body).css(".conversation-replies .content").map(&:text).map(&:strip)
+        expect(messages).to eq [@reply_a.content, @reply_b.content]
       end
     end
 
     context "creating a reply" do
       it 'is valid with content' do
-        conv = create(:conversation)
+        conv = create(:conversation, first_message: create(:message))
 
         visit tincanz.admin_conversation_path(conv)
 
@@ -54,9 +59,8 @@ describe 'admin::conversations', type: :feature do
           fill_in 'Content', with: 'coming atcha!'
           click_button 'Reply'
         end
-
         flash_notice!('Your message was delivered.')
-        assert_seen 'coming atcha!', within: :first_message
+        assert_seen 'coming atcha!', within: :first_reply
       end
 
       it "is invalid with no content" do

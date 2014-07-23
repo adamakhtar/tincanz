@@ -1,11 +1,16 @@
 <h1><%= @conversation.subject %></h1>
 
-<div class="conversation-messages">
-  <h3>Messages</h3>
-  <div class="messages-list">
-    <%= render partial: 'tincanz/admin/messages/message', collection: @conversation.messages.most_recent %>
-  </div>
+<div class="conversation-message">
 
+  <%= render 'tincanz/admin/messages/message', message: @first_message %>
+
+</div>
+
+<div class="conversation-replies">
+  <h3>Replies</h3>
+  <div class="replies-list">
+    <%= render partial: 'tincanz/admin/messages/message', collection: @subsequent_messages %>
+  </div>
 </div>
 
 <div class="conversation-reply">

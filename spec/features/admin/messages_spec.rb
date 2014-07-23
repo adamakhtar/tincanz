@@ -22,7 +22,7 @@ describe 'admin::messages', type: :feature do
 
       expect(page.current_path).to eq tincanz.admin_conversation_path(Tincanz::Conversation.last)
       flash_notice! 'Your message was delivered.'
-      assert_seen 'blahblahblah', within: :first_message
+      assert_seen 'blahblahblah', within: :conversation_message
     end
 
     it 'is not valid without content' do

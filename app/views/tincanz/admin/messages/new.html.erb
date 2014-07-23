@@ -2,7 +2,7 @@
 
 <%= form_for [:admin, @message], url: admin_messages_path do |f| %>
 
-  <%= hidden_field_tag :conversation_id, @message.conversation_id %>
+  <%= f.hidden_field :conversation_id, value: @message.conversation_id %>
 
   <%= f.hidden_field :user_id, value: tincanz_user.id %>
 
