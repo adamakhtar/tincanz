@@ -63,40 +63,66 @@ describe 'admin::conversations', type: :feature do
     end
 
 
-    context "creating a new conversaton" do
+    context "creating a new conversaton with single recipient" do
 
-      context "with single recipient" do
-        before do
-          sign_in admin
-          user = create(:user)
+      before do
+        sign_in admin
+        user = create(:user)
 
-          visit tincanz.admin_users_path
-          within(selector_for(:first_user)) do
-            click_link 'message'
-          end
-        end
-
-        it 'is valid with content' do
-          fill_in 'Content', with: 'blahblahblah'
-          click_button 'Send'
-
-          expect(page.current_path).to eq tincanz.admin_conversation_path(Tincanz::Conversation.last)
-          flash_notice! 'Your message was delivered.'
-          assert_seen 'blahblahblah', within: :conversation_message
-        end
-
-        it 'is not valid without content' do
-          click_button 'Send'
-          flash_alert!('Could not create your message.')
+        visit tincanz.admin_users_path
+        within(selector_for(:first_user)) do
+          click_link 'message'
         end
       end
 
-      context "with multiple recipients" do
+      it 'is valid with content' do
+        fill_in 'Content', with: 'blahblahblah'
+        click_button 'Send'
 
+        expect(page.current_path).to eq tincanz.admin_conversation_path(Tincanz::Conversation.last)
+        flash_notice! 'Your message was delivered.'
+        assert_seen 'blahblahblah', within: :conversation_message
+      end
 
+      it 'is not valid without content' do
+        click_button 'Send'
+        flash_alert!('Could not create your message.')
+      end
 
+    end
+      
+    context "creating a new conversaton with multiple recipients" do
+
+      before do
+        sign_in admin
+        @user_a = create(:user)
+        @user_b = create(:user)
+
+        visit tincanz.admin_users_path
+        
+        find("#user_#{@user_a.id} input[type='checkbox']").set(true)
+        find("#user_#{@user_b.id} input[type='checkbox']").set(true)
+        
+        within('.multi-actions') do
+          click_button 'Message'
+        end
+      end
+
+      it "creates a message" do
+        fill_in 'Content', with: 'blahblahblah'
+        click_button 'Send'
+
+        expect(page.current_path).to eq tincanz.admin_conversation_path(Tincanz::Conversation.last)
+        flash_notice! 'Your message was delivered.'
+
+        within(selector_for(:conversation_message)) do
+          expect(page).to have_content 'blahblahblah'
+          assert_seen @user_a.tincanz_email, within: :recipients_list
+          assert_seen @user_b.tincanz_email, within: :recipients_list
+        end
       end
     end
+    
 
     context "creating a reply" do
 

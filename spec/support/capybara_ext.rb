@@ -39,6 +39,8 @@ module CapybaraExt
     when :first_reply then '.replies-list .message:nth-child(1)'
     when :second_reply then '.replies-list .message:nth-child(2)'
     when :first_user then '.users-list .user:nth-child(1)'
+    when :second_user then '.users-list .user:nth-child(2)'
+    when :recipients_list then '.recipients-list'
     else
       raise "**** You specified to search within #{identifier}, but you haven't defined it in spec/support/capybara_ext.rb ****"
     end

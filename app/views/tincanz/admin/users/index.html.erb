@@ -1,12 +1,17 @@
 <h1>Users</h1>
 
-<table class="users-list table table-condensed table-hover">
-  <thead>
-    <tr>
-      <th>Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render @users %>
-  </tbody>
-</table>
+<%= form_tag new_admin_message_path, method: :get do %>
+  <div class="multi-actions">
+    <%= submit_tag 'Message' %>
+  </div>
+  <table class="users-list table table-condensed table-hover">
+    <thead>
+      <tr>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @users %>
+    </tbody>
+  </table>
+<% end %>
