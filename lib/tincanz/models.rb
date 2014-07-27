@@ -2,8 +2,6 @@ module Tincanz
   module Models
     extend ActiveSupport::Concern
 
-    
-
     module ClassMethods
       def acts_as_tincanz_user
         include TincanzInstanceMethods    

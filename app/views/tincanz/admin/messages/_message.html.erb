@@ -1,12 +1,41 @@
+<% @message_presenter = Tincanz::MessagePresenter.new(self, message, current_user: tincanz_user) %>
+
 <%= content_tag_for :div, message do %>
-  
-  <div class="user-email">
-    <%= message.user.tincanz_email %>
+  <div class="message-header">
+    <div class="message-date">
+      <%= @message_presenter.created_at %>
+    </div>
+
+    <div class="message-participants">
+      <span class="author"> 
+        <%= @message_presenter.author %>
+      </span>
+      sent to 
+      <span class="recipients">
+        <%= @message_presenter.recipient %>
+      </span>
+
+
+      <% if @message_presenter.multiple_recipients? %>
+        <ul class="recipients-list">
+          <% @message_presenter.recipients.each do |r| %>
+            <li><%= r.tincanz_email %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    <div>
+  <div>
+
+  <div class="message-body">
+
+    <div class="content">
+      <%= message.content %>
+    </div>
+
   </div>
 
-  <div class="content">
-    <%= message.content %>
+  <div class="message-footer">
+    <%= link_to t('tincanz.messages.reply'), new_admin_message_path(reply_to_id: message.id) %>
   </div>
-  
 <% end %>
 

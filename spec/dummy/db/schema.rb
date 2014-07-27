@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140721093656) do
+ActiveRecord::Schema.define(version: 20140723061953) do
 
   create_table "tincanz_conversations", force: true do |t|
     t.string   "subject"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20140721093656) do
   add_index "tincanz_messages", ["conversation_id"], name: "index_tincanz_messages_on_conversation_id"
   add_index "tincanz_messages", ["reply_to_id"], name: "index_tincanz_messages_on_reply_to_id"
   add_index "tincanz_messages", ["user_id"], name: "index_tincanz_messages_on_user_id"
+
+  create_table "tincanz_receipts", force: true do |t|
+    t.integer  "message_id"
+    t.integer  "recipient_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tincanz_receipts", ["message_id"], name: "index_tincanz_receipts_on_message_id"
+  add_index "tincanz_receipts", ["recipient_id"], name: "index_tincanz_receipts_on_recipient_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

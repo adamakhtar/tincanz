@@ -4,7 +4,6 @@
 module Tincanz
   class MessageComposer
     def initialize(params)
-      @params = params
       @message = Message.new(params)
     end
 

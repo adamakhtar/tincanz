@@ -7,14 +7,20 @@ module Tincanz
     before_filter :authorize_admin
     
     def new
-      @message = Message.new
+      find_reply_to
+      if @reply_to 
+        @message = Message.new(reply_to: @reply_to, user: tincanz_user, recipient_ids: [@reply_to.user.id], content: "\n\n----\n\n#{@reply_to.content}", conversation: @reply_to.conversation)
+      elsif params[:recipient_ids] and !@reply_to
+        @message = Message.new(reply_to: @reply_to, user: tincanz_user, recipient_ids: params[:recipient_ids])
+      end
     end
 
     def create
-      @message      = MessageComposer.compose(message_params.except(:conversation_id))
-      @conversation = find_conversation
-      @message.conversation = @conversation
-
+      Conversation.transaction do 
+        find_conversation
+        @message = @conversation.messages.new(message_params.except(:conversation_id))
+      end
+      
       if @message.save
         flash.notice = t('tincanz.messages.created')
         redirect_to admin_conversation_path(@message.conversation)
@@ -27,12 +33,17 @@ module Tincanz
     private
 
     def message_params
-      params.require(:message).permit(:conversation_id, :user_id, :content)
+      params.require(:message).permit(:conversation_id, :user_id, :content, :recipient_ids_string)
     end
 
     def find_conversation
-      @conversation = Conversation.where(id: message_params[:conversation_id]).first ||
-                      Conversation.create(user: tincanz_user) 
+      @conversation = Conversation.find_or_create_by(id: message_params[:conversation_id]) do |conversation|
+        conversation.user = tincanz_user
+      end
+    end
+
+    def find_reply_to
+      @reply_to = Message.where(id: params[:reply_to_id]).first
     end
   end
 end
