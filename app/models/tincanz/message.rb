@@ -21,11 +21,16 @@ module Tincanz
                class_name: Tincanz.user_class,
                through: :receipts
 
+    scope :recent, -> { order 'updated_at DESC' }
+
+    scope :most_recent, -> { recent.limit(1).first }
+
+    scope :involving, -> (user) { joins(:receipts).where(["user_id = :user_id OR tincanz_receipts.recipient_id = :user_id", user_id: user.id]) }
+
     validates :user, presence: true
     validates :conversation, presence: true
     validates :content, presence: true
 
-    scope :most_recent, -> { order 'updated_at DESC' }
 
     def recipient_ids_string=(val)
       self.recipient_ids = val.is_a?(String) ? val.split(",") : val

@@ -1,5 +1,7 @@
 Tincanz::Engine.routes.draw do
 
+  resources :conversations, only: [:index, :show]
+
   namespace :admin do
     resources :users, only: [:index, :show]
     resources  :conversations, only: [:index, :show]
