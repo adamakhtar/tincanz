@@ -13,7 +13,6 @@ describe 'Conversations', type: :feature do
     end
   end
 
-
   context "signed in as user" do
 
     before do
@@ -56,6 +55,8 @@ describe 'Conversations', type: :feature do
         assert_seen message_a.content, within: :conversation_message
         assert_seen message_b.content, within: :first_reply
       end
+
+      
 
     end
   end

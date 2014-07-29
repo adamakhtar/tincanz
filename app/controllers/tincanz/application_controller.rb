@@ -12,10 +12,14 @@ class Tincanz::ApplicationController < ApplicationController
 
   def authorize_admin
     if !Tincanz::AdminManagePolicy.new(tincanz_user).access? 
-      flash.alert = t('tincanz.errors.unauthorized')
-      redirect_to main_app.root_path
+      handle_unauthorized
     end
-  end 
+  end
+
+  def handle_unauthorized
+    flash.alert = t('tincanz.errors.unauthorized')
+    redirect_to main_app.root_path
+  end
 
   def sign_in_path
     path = Tincanz.sign_in_path || (main_app.respond_to?(:sign_in_path) and main_app.sign_in_path)
