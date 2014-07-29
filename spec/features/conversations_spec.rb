@@ -5,6 +5,15 @@ describe 'Conversations', type: :feature do
   let(:admin){ create(:admin) }
   let(:user){ create(:user) }
 
+
+  context "anonymous user" do
+    it 'is redirected to main_app.sign in path by default' do
+      visit tincanz.conversations_path
+      expect(page.current_path).to eq('/users/sign_in')
+    end
+  end
+
+
   context "signed in as user" do
 
     before do
@@ -42,8 +51,6 @@ describe 'Conversations', type: :feature do
         within(selector_for :first_conversation) do
           click_link 'Read more'
         end
-
-        page!
 
         expect(page.current_path).to eq tincanz.conversation_path(conv)
         assert_seen message_a.content, within: :conversation_message
