@@ -35,6 +35,7 @@ module CapybaraExt
 
   def selector_for(identifier)
     case identifier
+    when :first_conversation then '.conversations-list .conversation:nth-child(1)'
     when :conversation_message then '.conversation-message'
     when :first_reply then '.replies-list .message:nth-child(1)'
     when :second_reply then '.replies-list .message:nth-child(2)'

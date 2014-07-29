@@ -1,2 +1,15 @@
-<h1>Conversations#show</h1>
-<p>Find me in app/views/tincanz/conversations/show.html.erb</p>
+<h1><%= @conversation.subject %></h1>
+
+<div class="conversation-message">
+
+  <%= render partial: 'tincanz/admin/messages/message', object: @first_message %>
+  
+</div>
+
+<div class="conversation-replies">
+  <h3>Replies</h3>
+  <div class="replies-list">
+    <%= render partial: 'tincanz/admin/messages/message', collection: @subsequent_messages %>
+  </div>
+</div>
+

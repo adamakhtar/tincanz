@@ -16,7 +16,6 @@ module Tincanz
       @conversation        = Conversation.find(params[:id])
       @first_message       = @conversation.first_message
       @subsequent_messages = @conversation.subsequent_messages
-      @message             = @conversation.messages.build
     end
 
     def new

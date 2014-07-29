@@ -27,5 +27,29 @@ describe 'Conversations', type: :feature do
       conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation-message").map(&:text)
       expect(conversations).to eq [message_a.content, message_b.content]
     end
+
+    context 'displaying conversation' do
+
+      it 'displays messages' do
+        sender = create(:user)
+        message_a = create(:message, content: 'hello', user: sender, recipients: [user])
+        message_b = create(:message, content: 'long time no see', user: user, recipients: [sender])
+
+        conv = create(:conversation, messages: [message_a, message_b])
+
+        visit tincanz.conversations_path
+
+        within(selector_for :first_conversation) do
+          click_link 'Read more'
+        end
+
+        page!
+
+        expect(page.current_path).to eq tincanz.conversation_path(conv)
+        assert_seen message_a.content, within: :conversation_message
+        assert_seen message_b.content, within: :first_reply
+      end
+
+    end
   end
 end
