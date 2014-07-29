@@ -38,12 +38,15 @@ describe 'Conversations', type: :feature do
 
     context 'displaying conversation' do
 
-      it 'displays messages' do
+      it 'only displays messages user is participant of' do
         sender = create(:user)
+        innocent = create(:user)
+
         message_a = create(:message, content: 'hello', user: sender, recipients: [user])
         message_b = create(:message, content: 'long time no see', user: user, recipients: [sender])
+        message_c = create(:message, content: 'private problem', user: innocent, recipients: [sender])
 
-        conv = create(:conversation, messages: [message_a, message_b])
+        conv = create(:conversation, messages: [message_a, message_b, message_c])
 
         visit tincanz.conversations_path
 
@@ -54,9 +57,9 @@ describe 'Conversations', type: :feature do
         expect(page.current_path).to eq tincanz.conversation_path(conv)
         assert_seen message_a.content, within: :conversation_message
         assert_seen message_b.content, within: :first_reply
-      end
 
-      
+        expect(page).to_not have_content message_c.content
+      end
 
     end
   end
