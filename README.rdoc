@@ -103,6 +103,14 @@ def tincanz_user
 end
 ```
 
+```ruby
+class User
+  def tincanz_admin
+    User.where(:admin => true)
+  end
+end
+```
+
 ## Roadmap
 
 - Setup basic inapp messaging
