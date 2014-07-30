@@ -14,7 +14,7 @@ module Tincanz
 
     def show
       @conversation = Conversation.find(params[:id])
-
+      
       if ConversationPolicy.new(tincanz_user, @conversation).can_read?
         @first_message       = @conversation.first_message
         @subsequent_messages = @conversation.subsequent_messages.involving(tincanz_user)

@@ -1,0 +1,32 @@
+<% @message_presenter = Tincanz::MessagePresenter.new(self, message, current_user: tincanz_user) %>
+
+<%= content_tag_for :div, message do %>
+  <div class="message-header">
+    <div class="message-date">
+      <%= @message_presenter.created_at %>
+    </div>
+
+    <div class="message-participants">
+      <span class="author"> 
+        <%= @message_presenter.author %>
+      </span>
+      sent to 
+      <span class="recipients">
+        <%= @message_presenter.recipient %>
+      </span>
+    <div>
+  <div>
+
+  <div class="message-body">
+
+    <div class="content">
+      <%= message.content %>
+    </div>
+
+  </div>
+
+  <div class="message-footer">
+    <%= link_to t('tincanz.messages.reply'), new_conversation_message_path(message.conversation, reply_to_id: message.id) %>
+  </div>
+<% end %>
+
