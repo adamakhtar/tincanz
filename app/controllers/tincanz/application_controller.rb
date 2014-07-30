@@ -14,9 +14,7 @@ class Tincanz::ApplicationController < ApplicationController
   end
 
   def authorize_admin
-    if !Tincanz::AdminManagePolicy.new(tincanz_user).access? 
-      handle_unauthorized
-    end
+    authorize! Tincanz::AdminManagePolicy.new(tincanz_user).access? 
   end
 
   def authenticate_tincanz_user
