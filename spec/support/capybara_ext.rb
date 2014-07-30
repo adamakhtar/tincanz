@@ -21,6 +21,16 @@ module CapybaraExt
     end
   end
 
+  def assert_not_seen(text, opts={})
+    if opts[:within]
+      within(selector_for(opts[:within])) do
+        expect(page).to_not have_content(text)
+      end
+    else
+      expect(page).to_not have_content(text)
+    end
+  end
+
   def flash_alert!(text)
     within(".alert") do
       assert_seen(text)
