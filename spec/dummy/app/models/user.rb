@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
   def can_manage_tincanz?
     !!self.admin
   end
+
+  def self.tincanz_admin
+    where(admin: true)
+  end
 end
