@@ -4,7 +4,7 @@ module Tincanz
 
     module ClassMethods
       def acts_as_tincanz_user
-        include TincanzInstanceMethods    
+        include TincanzInstanceMethods   
       end
     end
 

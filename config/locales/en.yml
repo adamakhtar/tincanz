@@ -8,6 +8,7 @@ en:
       not_replied: 'Could not create your reply.'
     messages:
       reply: 'Reply'
+      create: 'Send'
       created: 'Your message was delivered.'
       not_created: 'Could not create your message.'
 

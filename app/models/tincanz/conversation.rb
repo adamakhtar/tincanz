@@ -18,8 +18,9 @@ module Tincanz
 
     scope :recent, -> { order('updated_at DESC') }
 
+    accepts_nested_attributes_for :messages
+
     belongs_to :user, class_name: Tincanz.user_class
-    validates :user, presence: true
   end
 end
 

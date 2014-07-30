@@ -28,7 +28,6 @@ module Tincanz
     scope :involving, -> (user) { joins(:receipts).where(["user_id = :user_id OR tincanz_receipts.recipient_id = :user_id", user_id: user.id]) }
 
     validates :user, presence: true
-    validates :conversation, presence: true
     validates :content, presence: true
 
 

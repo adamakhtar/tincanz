@@ -1,0 +1,15 @@
+<h1>Send us a message</h1>
+
+<%= form_for @conversation do |f| %>
+
+  <%= f.fields_for :messages do |m| %>
+
+    <div class="form-group">
+      <label for="conversation_message_content">Content</label>
+      <%= m.text_area :content, id: 'conversation_message_content' %>
+    </div>
+
+  <% end %>
+  
+  <%= f.submit t('tincanz.messages.create') %>
+<% end %>

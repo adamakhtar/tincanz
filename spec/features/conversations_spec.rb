@@ -2,8 +2,8 @@ require "rails_helper"
 
 describe 'Conversations', type: :feature do
   
-  let(:admin){ create(:admin) }
-  let(:user){ create(:user) }
+  let!(:admin){ create(:admin) }
+  let!(:user){ create(:user) }
 
 
   context "anonymous user" do
@@ -59,6 +59,27 @@ describe 'Conversations', type: :feature do
         assert_seen message_b.content, within: :first_reply
 
         expect(page).to_not have_content message_c.content
+      end
+
+    end
+
+    context 'creating a conversation' do
+
+      it 'is valid with content' do
+        visit tincanz.new_conversation_path
+
+        fill_in 'Content', with: 'can you help me?'
+        click_button 'Send'
+    
+        flash_notice!('Your message was delivered')
+        expect(page.current_path).to eq tincanz.conversations_path
+        assert_seen 'can you help me?', within: :first_conversation
+      end
+
+      it 'is invalid with no content' do
+        visit tincanz.new_conversation_path
+        click_button 'Send'
+        flash_alert!('Could not create your message.')
       end
 
     end
