@@ -1,13 +1,16 @@
-
 class Tincanz::ApplicationController < ApplicationController
+  
+  rescue_from Tincanz::Unauthorized, with: :handle_unauthorized
 
   private
 
-  def authenticate_tincanz_user
-    if !tincanz_user
-      flash.alert = t('tincanz.errors.unauthenticated')
-      redirect_to sign_in_path
-    end
+  def authorize!(permitted)
+    raise Tincanz::Unauthorized unless permitted 
+  end
+
+  def handle_unauthorized
+    flash.alert = t('tincanz.errors.unauthorized')
+    redirect_to main_app.root_path
   end
 
   def authorize_admin
@@ -16,9 +19,11 @@ class Tincanz::ApplicationController < ApplicationController
     end
   end
 
-  def handle_unauthorized
-    flash.alert = t('tincanz.errors.unauthorized')
-    redirect_to main_app.root_path
+  def authenticate_tincanz_user
+    if !tincanz_user
+      flash.alert = t('tincanz.errors.unauthenticated')
+      redirect_to sign_in_path
+    end
   end
 
   def sign_in_path

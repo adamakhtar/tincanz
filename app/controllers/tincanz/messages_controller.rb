@@ -4,6 +4,7 @@ module Tincanz
   class MessagesController < ApplicationController
 
     before_filter :find_conversation 
+    before_filter :authorize_reply_to_conversation, only: [:new, :create]
 
     respond_to :html
 
@@ -34,6 +35,10 @@ module Tincanz
     end
 
     private
+
+    def authorize_reply_to_conversation
+      authorize! ConversationPolicy.new(tincanz_user, @conversation).can_reply?
+    end
 
     def find_conversation
       @conversation = Conversation.find(params[:conversation_id])

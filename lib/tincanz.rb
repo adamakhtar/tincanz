@@ -3,6 +3,8 @@ require "tincanz/models"
 
 module Tincanz
 
+  class Unauthorized < StandardError; end
+
    mattr_accessor :sign_in_path, :user_class
 
    class << self

@@ -12,5 +12,9 @@ module Tincanz
         Conversation.involving(@user).where(id: @conversation.id).count > 0
       end
     end
+
+    def can_reply?
+      can_read?
+    end
   end
 end
