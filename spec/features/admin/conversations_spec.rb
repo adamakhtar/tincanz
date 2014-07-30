@@ -20,11 +20,13 @@ describe 'admin::conversations', type: :feature do
 
     it 'lists all' do
       conv_a = create(:conversation)
+      msg_a  = create(:message, conversation: conv_a, user: admin, recipients: [create(:user)])
       conv_b = create(:conversation)
+      msg_b  = create(:message, conversation: conv_b, user: admin, recipients: [create(:user)])
 
       visit tincanz.admin_conversations_path
       
-      conversations = Nokogiri::HTML(page.body).css(".conversations-list .subject").map(&:text)
+      conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation-message").map(&:text)
       expect(conversations.size).to eq 2
     end
 

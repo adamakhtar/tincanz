@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :message, class: Tincanz::Message do |f|
-    conversation
+    association :conversation, strategy: :build
     user
     content "Hi how are you?"
 
