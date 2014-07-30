@@ -38,22 +38,22 @@ describe 'Conversations', type: :feature do
 
     context 'displaying conversation' do
 
-      it 'only displays messages user is participant of' do
-        sender = create(:user)
-        innocent = create(:user)
+      let!(:sender) { create(:user) }
+      let!(:innocent) { create(:user) }
+      let!(:message_a) { create(:message, content: 'hello', user: sender, recipients: [user, innocent]) }
+      let!(:message_b) { create(:message, content: 'long time no see', user: user, recipients: [sender]) }
+      let!(:message_c) { create(:message, content: 'private problem', user: innocent, recipients: [sender]) }
+      let!(:conv){ create(:conversation, messages: [message_a, message_b, message_c]) }
 
-        message_a = create(:message, content: 'hello', user: sender, recipients: [user])
-        message_b = create(:message, content: 'long time no see', user: user, recipients: [sender])
-        message_c = create(:message, content: 'private problem', user: innocent, recipients: [sender])
-
-        conv = create(:conversation, messages: [message_a, message_b, message_c])
-
+      before do 
         visit tincanz.conversations_path
 
         within(selector_for :first_conversation) do
           click_link 'Read more'
         end
+      end
 
+      it 'only displays messages user is participant of' do
         expect(page.current_path).to eq tincanz.conversation_path(conv)
         assert_seen message_a.content, within: :conversation_message
         assert_seen message_b.content, within: :first_reply
@@ -61,6 +61,11 @@ describe 'Conversations', type: :feature do
         expect(page).to_not have_content message_c.content
       end
 
+      it 'doesnt reveal information about the other message recipients' do
+        expect(page.current_path).to eq tincanz.conversation_path(conv)
+        assert_not_seen innocent.tincanz_email, within: :conversation_message
+        assert_not_seen '2 recipients', within: :conversation_message
+      end
     end
 
     context 'creating a conversation' do
