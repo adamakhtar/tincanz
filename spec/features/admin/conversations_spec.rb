@@ -139,21 +139,21 @@ describe 'admin::conversations', type: :feature do
       end
 
       it 'is valid with content and quotes previous message' do
-        expect(page.current_path).to eq tincanz.new_admin_message_path
+        expect(page.current_path).to eq tincanz.new_admin_conversation_message_path(conv)
         fill_in 'Content', with: 'coming atcha!'
         click_button 'Send'
         
         expect(page.current_path).to eq tincanz.admin_conversation_path(conv)       
-        flash_notice! ('Your message was delivered.')
+        flash_notice! ('Your reply was delivered.')
         assert_seen 'coming atcha!'
         assert_seen conv.first_message.content
       end
 
       it "is invalid with no content" do
-        expect(page.current_path).to eq tincanz.new_admin_message_path
+        expect(page.current_path).to eq tincanz.new_admin_conversation_message_path(conv)
         fill_in 'Content', with: '' # remove quoted reply
         click_button 'Send'
-        flash_alert!('Could not create your message.')
+        flash_alert!('Could not create your reply.')
         expect(page).to_not have_content 'coming atcha!'
       end
     end

@@ -19,9 +19,33 @@ module Tincanz
     end
 
     def new
-      @recipient    = User.find(params[:user_id])
-      @conversation = Conversation.new(user: tincanz_user)
-      @message      = @conversation.messages.build(user: @recipient)
+      @conversation = Conversation.new
+      @message      = @conversation.messages.build
+      @message.recipient_ids = params[:recipient_ids]
+
+      respond_with @conversation
+    end
+
+    def create
+      @conversation = Conversation.new(conversation_params)
+      message       = @conversation.messages.first
+      message.user  = tincanz_user
+
+      if @conversation.save
+        flash.notice = t('tincanz.messages.created')
+        redirect_to admin_conversation_path(@conversation)
+      else
+        flash.alert  = t('tincanz.messages.not_created')
+        redirect_to new_admin_conversation_path(@conversation)
+      end
+
+      
+    end
+
+    private
+
+    def conversation_params
+      params.require(:conversation).permit(:messages_attributes => [[:content, :recipient_ids_string]])
     end
   end
 end

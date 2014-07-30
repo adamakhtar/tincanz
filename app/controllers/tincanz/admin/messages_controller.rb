@@ -5,28 +5,27 @@ module Tincanz
 
     before_filter :authenticate_tincanz_user
     before_filter :authorize_admin
+    before_filter :find_conversation
     
     def new
       find_reply_to
-      if @reply_to 
-        @message = Message.new(reply_to: @reply_to, user: tincanz_user, recipient_ids: [@reply_to.user.id], content: "\n\n----\n\n#{@reply_to.content}", conversation: @reply_to.conversation)
-      elsif params[:recipient_ids] and !@reply_to
-        @message = Message.new(reply_to: @reply_to, user: tincanz_user, recipient_ids: params[:recipient_ids])
-      end
+      @message = @conversation.messages.new(reply_to: @reply_to, 
+                                            user: tincanz_user, 
+                                            recipient_ids: [@reply_to.user.id], 
+                                            content: "\n\n----\n\n#{@reply_to.content}",
+                                            conversation: @conversation)
     end
 
     def create
-      Conversation.transaction do 
-        find_conversation
-        @message = @conversation.messages.new(message_params.except(:conversation_id))
-      end
-      
+      @message = @conversation.messages.build(message_params)
+      @message.user = tincanz_user
+
       if @message.save
-        flash.notice = t('tincanz.messages.created')
-        redirect_to admin_conversation_path(@message.conversation)
+        flash.notice = t('tincanz.conversations.replied')
+        redirect_to(admin_conversation_path(@conversation))
       else
-        flash.alert  = t('tincanz.messages.not_created')
-         render :new
+        flash.alert = t('tincanz.conversations.not_replied')
+        render :new
       end
     end
 
@@ -37,9 +36,7 @@ module Tincanz
     end
 
     def find_conversation
-      @conversation = Conversation.find_or_create_by(id: message_params[:conversation_id]) do |conversation|
-        conversation.user = tincanz_user
-      end
+      @conversation = Conversation.find(params[:conversation_id])
     end
 
     def find_reply_to

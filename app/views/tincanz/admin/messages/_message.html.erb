@@ -35,7 +35,7 @@
   </div>
 
   <div class="message-footer">
-    <%= link_to t('tincanz.messages.reply'), new_admin_message_path(reply_to_id: message.id) %>
+    <%= link_to t('tincanz.messages.reply'), new_admin_conversation_message_path(message.conversation, reply_to_id: message.id) %>
   </div>
 <% end %>
 
