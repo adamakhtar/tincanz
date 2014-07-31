@@ -4,10 +4,11 @@
   <thead>
     <tr>
       <th>User</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <%= @conversations.each do |conversation| %>
+    <% @conversations.each do |conversation| %>
       <%= content_tag_for :tr, conversation do %>
         <td class="conversation-message"><%= conversation.messages.involving(tincanz_user).most_recent.content%></td>
         <td><%= link_to 'Read more', conversation_path(conversation) %></td>

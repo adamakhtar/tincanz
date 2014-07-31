@@ -2,12 +2,14 @@
   <thead>
     <tr>
       <th>User</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <%= @conversations.each do |conversation| %>
+    <% @conversations.each do |conversation| %>
       <%= content_tag_for :tr, conversation do %>
         <td class="conversation-message"><%= link_to conversation.messages.most_recent.content, admin_conversation_path(conversation) %></td>
+        <td><%= link_to 'Read more', admin_conversation_path(conversation) %></td>
       <% end %>
     <% end %>
   </tbody>
