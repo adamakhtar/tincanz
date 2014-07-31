@@ -101,11 +101,13 @@ In your apps application_controller.rb
 def tincanz_user
    current_user # or your own method that returns the current user
 end
+helper_method
+ :tincanz_user
 ```
 
 ```ruby
 class User
-  def tincanz_admin
+  def self.tincanz_admin
     User.where(:admin => true)
   end
 end
