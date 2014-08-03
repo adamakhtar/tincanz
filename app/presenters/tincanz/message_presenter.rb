@@ -13,7 +13,7 @@ module Tincanz
     end
 
     def created_at
-      @message.created_at.strftime('%F %T')
+      @message.created_at.strftime('%d/%m/%Y')
     end
 
     def multiple_recipients?
