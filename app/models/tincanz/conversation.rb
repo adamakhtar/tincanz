@@ -1,5 +1,9 @@
 module Tincanz
   class Conversation < ActiveRecord::Base
+
+    belongs_to :assignee, 
+               foreign_key: :user_id,
+               class_name: Tincanz.user_class
     
     has_many :messages, class_name: 'Tincanz::Message'
 

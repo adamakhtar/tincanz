@@ -10,6 +10,7 @@ Tincanz::Engine.routes.draw do
     resources :users, only: [:index, :show]
     resources  :conversations, only: [:index, :show, :new, :create] do
       resources  :messages, only: [:new, :create]
+      resource   :assignee, only: :update, controller: 'conversation_assignees'
     end
   end
 

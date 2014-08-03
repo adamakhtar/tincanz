@@ -1,11 +1,19 @@
 en:
   tincanz:
+    forms:
+      update: 'Update'
+      save: 'Save'
     views:
       ago: 'ago'
       participants: 'participants'
+      assigned_to: 'Assigned to'
+      unassigned: 'No one'
     errors: 
       unauthenticated: 'You need to sign in first.'
       unauthorized: "Sorry you can't access that."
+    assignees:
+      updated: 'Conversation was assigned.'
+      not_updated: 'Could not assign the converation.'
     conversations:
       replied: 'Your reply was delivered.'
       not_replied: 'Could not create your reply.'
@@ -14,4 +22,6 @@ en:
       create: 'Send'
       created: 'Your message was delivered.'
       not_created: 'Could not create your message.'
+
+
 
