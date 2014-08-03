@@ -21,7 +21,7 @@ module Tincanz
                class_name: Tincanz.user_class,
                through: :receipts
 
-    scope :recent, -> { order 'updated_at DESC' }
+    scope :recent, -> { order 'created_at DESC' }
 
     scope :most_recent, -> { recent.limit(1).first }
 

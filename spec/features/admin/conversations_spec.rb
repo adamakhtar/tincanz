@@ -26,7 +26,7 @@ describe 'admin::conversations', type: :feature do
 
       visit tincanz.admin_conversations_path
       
-      conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation-message").map(&:text)
+      conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation").map(&:text)
       expect(conversations.size).to eq 2
     end
 

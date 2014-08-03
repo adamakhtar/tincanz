@@ -1,0 +1,14 @@
+<div class="message">
+  <div class="message-header">
+    <div class="inner">
+      <div class="meta">
+        <%= message.created_at.strftime('%d/%m/%Y') %> <%= message.user.tincanz_email %>
+      </div>
+    </div>
+  </div>
+  <div class="message-body">
+    <div class="inner">
+      <%= message.content %>
+    </div>
+  </div>
+</div>

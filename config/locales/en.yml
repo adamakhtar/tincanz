@@ -1,5 +1,8 @@
 en:
   tincanz:
+    views:
+      ago: 'ago'
+      participants: 'participants'
     errors: 
       unauthenticated: 'You need to sign in first.'
       unauthorized: "Sorry you can't access that."
