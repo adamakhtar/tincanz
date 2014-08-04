@@ -25,7 +25,7 @@ module Tincanz
 
     scope :most_recent, -> { recent.limit(1).first }
 
-    scope :involving, -> (user) { joins(:receipts).where(["user_id = :user_id OR tincanz_receipts.recipient_id = :user_id", user_id: user.id]) }
+    scope :involving, -> (user) { joins(:receipts).where(["tincanz_messages.user_id = :user_id OR tincanz_receipts.recipient_id = :user_id", user_id: user.id]) }
 
     validates :user, presence: true
     validates :content, presence: true

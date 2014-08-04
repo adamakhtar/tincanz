@@ -44,9 +44,6 @@ describe 'admin::conversations', type: :feature do
 
       it 'displays message recipients' do
         visit tincanz.admin_conversation_path(@conv)
-        within(selector_for :conversation_message) do
-
-        end
         assert_seen @recipient_a.tincanz_email, within: :conversation_message
         assert_seen @recipient_b.tincanz_email, within: :conversation_message
       end

@@ -1,13 +1,14 @@
-<div class="conversation-message">
+<div class="conversation-single">
+  <div class="column">
+    <div class="conversation-message">
+      <%= render partial: 'tincanz/messages/message', object: @first_message %>
+      
+    </div>
 
-  <%= render partial: 'tincanz/messages/message', object: @first_message %>
-  
+    <div class="conversation-replies">
+      <div class="replies-list">
+        <%= render partial: 'tincanz/messages/message', collection: @subsequent_messages %>
+      </div>
+    </div>
+  <div>
 </div>
-
-<div class="conversation-replies">
-  <h3>Replies</h3>
-  <div class="replies-list">
-    <%= render partial: 'tincanz/messages/message', collection: @subsequent_messages %>
-  </div>
-</div>
-

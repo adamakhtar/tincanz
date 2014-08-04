@@ -34,7 +34,7 @@ module Tincanz
              class_name: 'Tincanz::Message'         
 
 
-    scope :involving, -> (user) { joins(messages: :receipts).where(["tincanz_messages.user_id = :user_id OR tincanz_receipts.recipient_id = :user_id", user_id: user.id]) }
+    scope :involving, -> (user) { joins(messages: :receipts).where(["tincanz_messages.user_id = :user_id OR tincanz_receipts.recipient_id = :user_id", user_id: user.id]).uniq }
 
     scope :recent, -> { order('created_at DESC') }
 

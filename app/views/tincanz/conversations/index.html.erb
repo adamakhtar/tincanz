@@ -1,18 +1,38 @@
-<h1>Conversations</h1>
+<div class="conversations-list">
+  <div class="column">
 
-<table class="conversations-list table table-condensed table-hover">
-  <thead>
-    <tr>
-      <th>User</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
     <% @conversations.each do |conversation| %>
-      <%= content_tag_for :tr, conversation do %>
-        <td class="conversation-message"><%= conversation.messages.involving(tincanz_user).most_recent.content%></td>
-        <td><%= link_to 'Read more', conversation_path(conversation) %></td>
+      <%= content_tag_for :div, conversation do %>
+
+        <a href="<%= conversation_path(conversation) %>">
+
+          <div class="conversation-header">
+            <div class="inner">
+              <div class="messages-count">
+                <span class="badge"><%= conversation.messages.count %></span>
+              </div>
+            </div>
+
+          </div>
+          
+          <div class="message-stream">
+            <%= render partial: 'tincanz/admin/conversations/message_summary', object: conversation.first_message, as: :message %>
+
+            <% subsequent = conversation.subsequent_messages.count %>
+
+            <% if subsequent > 0 %>
+              
+              <% if subsequent > 2 %>
+                <div class="message-collapsed"></div>
+                <div class="message-collapsed"></div>      
+              <% end %>
+
+              <%= render partial: 'tincanz/admin/conversations/message_summary', object: conversation.most_recent_message, as: :message %>        
+
+            <% end %>          
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    <a>
+  </div>
+</div>
