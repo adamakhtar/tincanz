@@ -18,16 +18,52 @@ describe 'admin::conversations', type: :feature do
       sign_in admin
     end
 
-    it 'lists all' do
-      conv_a = create(:conversation)
-      msg_a  = create(:message, conversation: conv_a, user: admin, recipients: [create(:user)])
-      conv_b = create(:conversation)
-      msg_b  = create(:message, conversation: conv_b, user: admin, recipients: [create(:user)])
+    context "when listing" do
+      it 'displays all' do
+        conv_a = create(:conversation)
+        msg_a  = create(:message, conversation: conv_a, user: admin, recipients: [create(:user)])
+        conv_b = create(:conversation)
+        msg_b  = create(:message, conversation: conv_b, user: admin, recipients: [create(:user)])
 
-      visit tincanz.admin_conversations_path
-      
-      conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation").map(&:text)
-      expect(conversations.size).to eq 2
+        visit tincanz.admin_conversations_path
+
+        click_link('All')
+        
+        conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation").map(&:text)
+        expect(conversations.size).to eq 2
+      end
+
+      it 'displays assigned to current admin' do
+        other_admin = create(:admin)
+
+        conv_a = create(:conversation, user: admin)
+        msg_a  = create(:message, conversation: conv_a, user: admin, recipients: [create(:user)], content: 'message_a')
+        conv_b = create(:conversation, user: other_admin)
+        msg_b  = create(:message, conversation: conv_b, user: admin, recipients: [create(:user)])
+
+        visit tincanz.admin_conversations_path
+
+        click_link 'Yours'
+
+        conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation").map(&:text)
+        expect(conversations.size).to eq 1
+        assert_seen(msg_a.content)
+      end
+
+      it 'displays unassigned' do
+        conv_a = create(:conversation, user: admin)
+        msg_a  = create(:message, conversation: conv_a, user: admin, recipients: [create(:user)], content: 'message_a')
+        conv_b = create(:conversation, user: nil)
+        msg_b  = create(:message, conversation: conv_b, user: admin, recipients: [create(:user)])
+
+        visit tincanz.admin_conversations_path
+
+        click_link 'Nobody'
+
+        conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation").map(&:text)
+        expect(conversations.size).to eq 1
+        assert_seen(msg_b.content)
+      end
     end
 
     context 'when displaying a conversation' do

@@ -8,7 +8,7 @@ module Tincanz
     respond_to :html
 
     def index
-      @conversations = Conversation.all
+      @conversations = Inbox.new(tincanz_user, params).conversations
       respond_with @conversations
     end
 
