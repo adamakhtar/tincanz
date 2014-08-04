@@ -15,7 +15,6 @@ module Tincanz
     def show
       @conversation = Conversation.find(params[:id])
       authorize! ConversationPolicy.new(tincanz_user, @conversation).can_read?
-
       @stream       = ConversationStream.new(tincanz_user, @conversation)
       respond_with @conversation
     end
@@ -27,11 +26,8 @@ module Tincanz
     end
 
     def create
-      @conversation = Conversation.new(conversation_params)
-      message       = @conversation.messages.first
-      message.recipients = Tincanz.user_class.tincanz_admin
-      message.user       = tincanz_user
-
+      @conversation = ConversationComposer.compose(tincanz_user, conversation_params)
+    
       if @conversation.save
         flash.notice = t('tincanz.messages.created')
       else
