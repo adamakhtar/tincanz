@@ -1,7 +1,7 @@
 require_dependency "tincanz/application_controller"
 
 module Tincanz
-  class Admin::ConversationAssigneesController < ApplicationController
+  class Admin::AssigneesController < ApplicationController
     before_filter :authenticate_tincanz_user
     before_filter :authorize_admin
 
