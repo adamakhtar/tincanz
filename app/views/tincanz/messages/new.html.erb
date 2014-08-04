@@ -1,14 +1,48 @@
-<h1>New Message</h1>
+<h1>Reply to message</h1>
 
-<%= form_for [@conversation, @message] do |f| %>
+<div class="column">
+  
+  <% if @reply_to %>
+    <% @message_presenter = Tincanz::MessagePresenter.new(self, @reply_to, current_user: tincanz_user) %>
 
-  <%= f.hidden_field :reply_to_id, value: @message.reply_to_id %>
+    <div class="message">
+    <div class="message-header">
+      <div class="message-header-top">
+        <div class="inner">
+          <div class="message-date">
+            <%= @message_presenter.created_at %>
+          </div>
+          <div class="message-participants">
+            <span class="author"> 
+              <%= @message_presenter.author %> <%= t('tincanz.views.wrote') %>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div class="form-group">
-    <label for='message_content'>Content</label>
-    <%= f.text_area :content, rows: 5 %>
-  </div>
-            
-  <%= f.submit 'Send' %>
+    <div class="message-body">
+      <div class="inner">
+        <div class="content">
+          <%= simple_format @reply_to.content %>
+        </div>
+      </div>
+    </div>
+  </div>  
+  <% end %>
 
-<% end %>
+  <%= form_for [@conversation, @message] do |f| %>
+
+    <%= f.hidden_field :recipient_ids_string, value: @message.recipient_ids.join(",") %>
+   
+    <%= f.hidden_field :reply_to_id, value: @message.reply_to_id %>
+
+    <div class="form-group">
+      <label for='message_content'>Content</label>
+      <%= f.text_area :content, rows: 5 %>
+    </div>
+              
+    <%= f.submit 'Send' %>
+
+  <% end %>
+</div>

@@ -45,7 +45,7 @@ module Tincanz
     end
 
     def message_params
-      params.require(:message).permit(:reply_to_id, :content)
+      params.require(:message).permit(:reply_to_id, :content, :recipient_ids_string)
     end
   end
 end

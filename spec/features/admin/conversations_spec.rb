@@ -26,7 +26,7 @@ describe 'admin::conversations', type: :feature do
 
       visit tincanz.admin_conversations_path
       
-      conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation-message").map(&:text)
+      conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation").map(&:text)
       expect(conversations.size).to eq 2
     end
 
@@ -44,9 +44,6 @@ describe 'admin::conversations', type: :feature do
 
       it 'displays message recipients' do
         visit tincanz.admin_conversation_path(@conv)
-        within(selector_for :conversation_message) do
-
-        end
         assert_seen @recipient_a.tincanz_email, within: :conversation_message
         assert_seen @recipient_b.tincanz_email, within: :conversation_message
       end

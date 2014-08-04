@@ -2,31 +2,33 @@
 
 <%= content_tag_for :div, message do %>
   <div class="message-header">
-    <div class="message-date">
-      <%= @message_presenter.created_at %>
+    <div class="message-header-top">
+      <div class="inner">
+        <div class="message-date">
+          <%= @message_presenter.created_at %>
+        </div>
+        <div class="message-participants">
+          <span class="author"> 
+            <%= @message_presenter.author %>
+          </span>
+          sent to 
+          <span class="recipients">
+            <%= @message_presenter.recipient %>
+          </span>
+        </div>
+        <div class="actions">
+          <%= link_to t('tincanz.messages.reply'), new_conversation_message_path(message.conversation, reply_to_id: message.id) unless message.user == tincanz_user %>
+        </div>
+      </div>
     </div>
-
-    <div class="message-participants">
-      <span class="author"> 
-        <%= @message_presenter.author %>
-      </span>
-      sent to 
-      <span class="recipients">
-        <%= @message_presenter.recipient %>
-      </span>
-    <div>
-  <div>
-
-  <div class="message-body">
-
-    <div class="content">
-      <%= message.content %>
-    </div>
-
   </div>
 
-  <div class="message-footer">
-    <%= link_to t('tincanz.messages.reply'), new_conversation_message_path(message.conversation, reply_to_id: message.id) %>
+  <div class="message-body">
+    <div class="inner">
+      <div class="content">
+        <%= simple_format message.content %>
+      </div>
+    </div>
   </div>
 <% end %>
 

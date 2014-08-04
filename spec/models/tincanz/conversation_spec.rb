@@ -43,5 +43,39 @@ module Tincanz
         expect(Conversation.involving(hero)).to eq [conv_a]
       end
     end
+
+    context "#participants" do
+
+      it "returns authors and recipients in conversation" do
+        adam = create(:user, email: 'adam@gmail.com')
+        jack = create(:user, email: 'jack@gmail.com')
+        jill = create(:user, email: 'jill@gmail.com')
+
+        conv = create(:conversation)
+        msg_a = create(:message, conversation: conv, user: adam, recipients: [jack, jill])
+
+        participant_ids = conv.participants.map(&:id)
+
+        expect(participant_ids).to include(adam.id)
+        expect(participant_ids).to include(jack.id)
+        expect(participant_ids).to include(jill.id)
+      end
+
+      it "does not contain duplicates" do
+        adam = create(:user)
+        jack = create(:user)
+        jill = create(:user)
+
+        conv = create(:conversation)
+        msg_a = create(:message, conversation: conv, user: adam, recipients: [jack, jill])
+        msg_b = create(:message, conversation: conv, user: jill, recipients: [adam])
+        msg_c = create(:message, conversation: conv, user: jack, recipients: [adam])
+        msg_d = create(:message, conversation: conv, user: adam, recipients: [jack])
+
+        participant_ids = conv.participants.map(&:id)
+
+        expect(participant_ids.size).to eq 3
+      end
+    end
   end
 end

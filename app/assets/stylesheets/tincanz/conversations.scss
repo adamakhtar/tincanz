@@ -1,0 +1,41 @@
+.inner {
+  padding: 0px 10px;
+}
+
+.conversation-single, .conversations-list {
+  margin: 60px auto 100px;
+}
+
+/* LIST */
+
+.conversations-list .conversation {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.conversations-list .conversation > a {
+  text-decoration: inherit;
+  color: inherit;
+  &:hover {
+    color: inherit;
+  }
+
+}
+
+.conversations-list .conversation-header {
+  @include panel-border;
+  @include secondary-text;
+  @include padding-vertical-small;
+  height: 20px;
+  background: #F5FAFF;
+}
+
+.conversations-list .participants-count {
+  float: left;
+  line-height: 20px;
+}
+
+.conversations-list .messages-count {
+  float: right;
+  line-height: 20px;
+}

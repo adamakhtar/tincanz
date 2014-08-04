@@ -6,12 +6,11 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="tincanz <%= controller_name %> <%= action_name %>">
   <% flash.each do |key, message| %>
     <div class='flash <%= key %>'><%= message %></div>
   <% end %>
-
-
+  
 <%= yield %>
 
 </body>

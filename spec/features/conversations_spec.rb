@@ -32,7 +32,7 @@ describe 'Conversations', type: :feature do
       conv_c = create(:conversation, messages: [message_c])
 
       visit tincanz.conversations_path
-      conversations = Nokogiri::HTML(page.body).css(".conversations-list .conversation-message").map(&:text)
+      conversations = Nokogiri::HTML(page.body).css(".conversations-list .message:nth-child(1) .message-body").map{|x| x.text.strip }
       expect(conversations).to eq [message_a.content, message_b.content]
     end
 
@@ -46,11 +46,7 @@ describe 'Conversations', type: :feature do
       let!(:conv){ create(:conversation, messages: [message_a, message_b, message_c]) }
 
       before do 
-        visit tincanz.conversations_path
-
-        within(selector_for :first_conversation) do
-          click_link 'Read more'
-        end
+        visit tincanz.conversation_path(conv)
       end
 
       it 'only displays messages user is participant of' do
