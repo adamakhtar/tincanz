@@ -1,24 +1,26 @@
 <div class="conversation-single">
+  <div class="column">
 
-  <%= form_for @conversation, url: admin_conversation_assignee_path(@conversation), method: :put do |f| %>
-    <label for="conversation_user_id"><%= t('tincanz.views.assigned_to') %></label>
-    <%= f.collection_select :user_id, 
-                            Tincanz.user_class.tincanz_admin, 
-                            :id, 
-                            :tincanz_email,
-                            include_blank: t('tincanz.views.unassigned')
-                             %>
-    <%= f.submit t('tincanz.forms.update') %>
-  <% end %>
+    <%= form_for @conversation, url: admin_conversation_assignee_path(@conversation), method: :put do |f| %>
+      <label for="conversation_user_id"><%= t('tincanz.views.assigned_to') %></label>
+      <%= f.collection_select :user_id, 
+                              Tincanz.user_class.tincanz_admin, 
+                              :id, 
+                              :tincanz_email,
+                              include_blank: t('tincanz.views.unassigned')
+                               %>
+      <%= f.submit t('tincanz.forms.update') %>
+    <% end %>
 
-  <div class="conversation-message">
-    <%= render partial: 'tincanz/admin/messages/message', object: @first_message %>
-    
-  </div>
-
-  <div class="conversation-replies">
-    <div class="replies-list">
-      <%= render partial: 'tincanz/admin/messages/message', collection: @subsequent_messages %>
+    <div class="conversation-message">
+      <%= render partial: 'tincanz/admin/messages/message', object: @first_message %>
+      
     </div>
-  </div>
-<div>
+
+    <div class="conversation-replies">
+      <div class="replies-list">
+        <%= render partial: 'tincanz/admin/messages/message', collection: @subsequent_messages %>
+      </div>
+    </div>
+  <div>
+</div>

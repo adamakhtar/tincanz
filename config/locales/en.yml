@@ -8,6 +8,7 @@ en:
       participants: 'participants'
       assigned_to: 'Assigned to'
       unassigned: 'No one'
+      wrote: 'wrote'
     errors: 
       unauthenticated: 'You need to sign in first.'
       unauthorized: "Sorry you can't access that."

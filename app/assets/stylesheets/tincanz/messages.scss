@@ -1,4 +1,63 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+.message {
+  @include padding-vertical-medium;
+  @include panel-border; 
+}
+
+.message-header-top {
+  @include padding-vertical-small;
+  clear: both;
+  height: 30px;
+}
+
+.message-date {
+  @include tertiary-text;
+  float: left;
+  line-height: 30px;
+  margin-right: 10px;
+}
+
+.message-participants {
+  @include tertiary-text;
+  float: left;
+  line-height: 30px;
+}
+
+.actions {
+  float: right;
+  line-height: 30px;
+  @include tertiary-text;
+  font-style: normal;
+
+}
+
+.message-header-bottom {
+  @include padding-vertical-small;
+  @include tertiary-text;
+}
+.recipients-list {
+  @include padding-vertical-small;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  clear: both;
+}
+
+.recipients-list li {
+  float: left;
+  margin-right: 5px;
+}
+
+.message-body {
+  @include padding-vertical-medium;
+  font-size: 14px;
+}
+
+.message-collapsed {
+  @include panel-border;
+  @include padding-vertical-small;
+}
+
+.message .meta {
+  @include tertiary-text;
+  margin-bottom: 5px;
+}
