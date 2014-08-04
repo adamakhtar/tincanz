@@ -1,6 +1,6 @@
 module Tincanz
   class Inbox
-    def initialize(user. params)
+    def initialize(user, params)
       @user = user
       @current_filter = params[:tab] || 'All'
     end

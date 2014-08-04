@@ -1,13 +1,13 @@
 <div class="conversation-single">
   <div class="column">
     <div class="conversation-message">
-      <%= render partial: 'tincanz/messages/message', object: @first_message %>
+      <%= render partial: 'tincanz/messages/message', object: @stream.first_message %>
       
     </div>
 
     <div class="conversation-replies">
       <div class="replies-list">
-        <%= render partial: 'tincanz/messages/message', collection: @subsequent_messages %>
+        <%= render partial: 'tincanz/messages/message', collection: @stream.subsequent_messages %>
       </div>
     </div>
   <div>
