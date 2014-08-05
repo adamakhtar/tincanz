@@ -7,7 +7,7 @@ en:
       ago: 'ago'
       participants: 'participants'
       assigned_to: 'Assigned to'
-      unassigned: 'No one'
+      unassigned: 'Nobody'
       wrote: 'wrote'
     errors: 
       unauthenticated: 'You need to sign in first.'
@@ -18,6 +18,9 @@ en:
     conversations:
       replied: 'Your reply was delivered.'
       not_replied: 'Could not create your reply.'
+      all: 'All'
+      yours: 'Yours'
+      nobody: 'Nobody'
     messages:
       reply: 'Reply'
       create: 'Send'

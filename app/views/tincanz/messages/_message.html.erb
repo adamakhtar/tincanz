@@ -17,10 +17,24 @@
           </span>
         </div>
         <div class="actions">
-          <%= link_to t('tincanz.messages.reply'), new_conversation_message_path(message.conversation, reply_to_id: message.id) unless message.user == tincanz_user %>
+          <%= link_to t('tincanz.messages.reply'), new_conversation_message_path(message.conversation, reply_to_id: message.id)  unless message.user == tincanz_user %>
         </div>
+
+
       </div>
     </div>
+
+    <% if tincanz_user.can_manage_tincanz? and @message_presenter.multiple_recipients? %>
+      <div class="message-header-bottom">
+        <div class="inner">
+          <div class="recipients-list">
+            <% @message_presenter.recipients.each do |r| %>
+              <span><%= r.tincanz_email %></span>
+            <% end %>
+          </span>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <div class="message-body">

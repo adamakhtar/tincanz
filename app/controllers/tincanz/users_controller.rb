@@ -1,7 +1,7 @@
 require_dependency "tincanz/application_controller"
 
 module Tincanz
-  class Admin::UsersController < ApplicationController
+  class UsersController < ApplicationController
     before_filter :authenticate_tincanz_user
     before_filter :authorize_admin
 

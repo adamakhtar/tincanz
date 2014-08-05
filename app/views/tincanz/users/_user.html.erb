@@ -1,0 +1,6 @@
+<%= content_tag_for :tr, user do %>
+  <td><%= check_box_tag 'recipient_ids[]', user.id %></td>
+  <td class="email"><%= link_to user.tincanz_email, user_path(user) %></td>
+  <td class="message"><%= link_to 'message', new_conversation_path(recipient_ids: [user.id]) %></td>
+<% end %>
+

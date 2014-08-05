@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe 'admin::conversation_assignees', type: :feature do
+describe 'admin::assignees', type: :feature do
   
   let(:admin){ create(:admin) }
   
@@ -15,7 +15,7 @@ describe 'admin::conversation_assignees', type: :feature do
       msg  = create(:message, conversation: conv)
       other_admin = create(:admin)
 
-      visit tincanz.admin_conversation_path(conv)
+      visit tincanz.conversation_path(conv)
       page.select other_admin.tincanz_email, from: 'conversation_user_id'
       click_button 'Update' 
 

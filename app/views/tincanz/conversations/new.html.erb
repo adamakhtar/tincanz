@@ -1,8 +1,10 @@
-<h1>Send us a message</h1>
+<h1>Send a message</h1>
 
 <%= form_for @conversation do |f| %>
 
   <%= f.fields_for :messages do |m| %>
+    
+    <%= m.hidden_field :recipient_ids_string, value: m.object.recipient_ids.join(",") if tincanz_user.can_manage_tincanz? %>
 
     <div class="form-group">
       <label for="conversation_message_content">Content</label>
