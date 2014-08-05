@@ -7,7 +7,7 @@ module Tincanz
       @reply = reply
     end
 
-    def can_read?
+    def can_reply?
       if @user.can_manage_tincanz?
         true
       else

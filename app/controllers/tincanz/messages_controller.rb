@@ -50,7 +50,7 @@ module Tincanz
     end
 
     def authorize_reply_to!
-      authorize! ReplyPolicy.new(tincanz_user, @reply_to).can_read?
+      authorize! ReplyPolicy.new(tincanz_user, @reply_to).can_reply?
     end
 
     def message_params
