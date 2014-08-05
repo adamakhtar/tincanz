@@ -1,7 +1,7 @@
 require_dependency "tincanz/application_controller"
 
 module Tincanz
-  class Admin::AssigneesController < ApplicationController
+  class AssigneesController < ApplicationController
     before_filter :authenticate_tincanz_user
     before_filter :authorize_admin
 
@@ -14,7 +14,7 @@ module Tincanz
         flash.alert  = t('tincanz.assignees.not_updated')
       end
 
-      redirect_to admin_conversation_path(@conversation)
+      redirect_to conversation_path(@conversation)
     end
 
     private

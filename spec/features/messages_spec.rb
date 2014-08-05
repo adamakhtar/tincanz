@@ -26,7 +26,7 @@ describe 'Conversations', type: :feature do
         fill_in 'Content', with: 'woohoo'
         click_button 'Send'
 
-        expect(page.current_path).to eq(tincanz.conversations_path)
+        expect(page.current_path).to eq(tincanz.conversation_path(conv))
         flash_notice!('Your reply was delivered.')
       end
 

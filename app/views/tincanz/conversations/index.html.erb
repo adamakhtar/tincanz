@@ -1,3 +1,19 @@
+<% if tincanz_user.can_manage_tincanz? %>
+  <div class="inbox-toolbar">
+    <%= content_tag :li, class: ('active' if params[:tab] == 'All' ) do %>
+      <%= link_to t('tincanz.conversations.all'), conversations_path(tab: 'All') %>
+    <% end %>
+
+    <%= content_tag :li, class: ('active' if params[:tab] == 'Yours' ) do %>
+      <%= link_to t('tincanz.conversations.yours'), conversations_path(tab: 'Yours') %>
+    <% end %>
+
+    <%= content_tag :li, class: ('active' if params[:tab] == 'Nobody' ) do %>
+      <%= link_to t('tincanz.conversations.nobody'), conversations_path(tab: 'Nobody') %>
+    <% end %>
+  </div>
+<% end %>
+
 <div class="conversations-list">
   <div class="column">
 
@@ -16,7 +32,7 @@
           </div>
           
           <div class="message-stream">
-            <%= render partial: 'tincanz/admin/conversations/message_summary', object: conversation.first_message, as: :message %>
+            <%= render partial: 'tincanz/conversations/message_summary', object: conversation.first_message, as: :message %>
 
             <% subsequent = conversation.subsequent_messages.count %>
 
@@ -27,7 +43,7 @@
                 <div class="message-collapsed"></div>      
               <% end %>
 
-              <%= render partial: 'tincanz/admin/conversations/message_summary', object: conversation.most_recent_message, as: :message %>        
+              <%= render partial: 'tincanz/conversations/message_summary', object: conversation.most_recent_message, as: :message %>        
 
             <% end %>          
           </div>

@@ -30,7 +30,7 @@ module Tincanz
 
       respond_with @message do |f|
         f.html do
-          @message.persisted? ? redirect_to(conversations_path) : render(action: :new)
+          @message.persisted? ? redirect_to(conversation_path(@conversation)) : render(action: :new)
         end
       end
     end

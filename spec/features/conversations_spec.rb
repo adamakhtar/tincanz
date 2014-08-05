@@ -73,8 +73,8 @@ describe 'Conversations', type: :feature do
         click_button 'Send'
     
         flash_notice!('Your message was delivered')
-        expect(page.current_path).to eq tincanz.conversations_path
-        assert_seen 'can you help me?', within: :first_conversation
+        expect(page.current_path).to eq tincanz.conversation_path(Tincanz::Conversation.last)
+        assert_seen 'can you help me?', within: :conversation_message
       end
 
       it 'is invalid with no content' do

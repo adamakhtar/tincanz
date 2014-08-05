@@ -8,7 +8,7 @@ module Tincanz
     respond_to :html
 
     def index
-      @conversations = Conversation.involving(tincanz_user) 
+      @conversations = Inbox.new(tincanz_user, params).conversations
       respond_with @conversations
     end
 
@@ -22,6 +22,7 @@ module Tincanz
     def new
       @conversation = Conversation.new
       @message      = @conversation.messages.build
+      @message.recipient_ids = params[:recipient_ids]
       respond_with @conversation
     end
 
@@ -34,13 +35,13 @@ module Tincanz
         flash.alert  = t('tincanz.messages.not_created')
       end
 
-      respond_with @conversation, location: conversations_path
+      respond_with @conversation
     end
 
     private
 
     def conversation_params
-      params.require(:conversation).permit(:messages_attributes => [[:content]])
+      params.require(:conversation).permit(:messages_attributes => [[:content, :recipient_ids_string]])
     end
   end
 end
