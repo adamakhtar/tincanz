@@ -1,4 +1,7 @@
-= Tincanz
+
+#Tincanz
+
+** Notice - I've stopped working on this project for the forseeable future. It isn't in any useable state so please look for an alternative. You may be interested in my other project https://github.com/robodisco/hightower which allows you to watch out for certain user behavour and automatically respond.**
 
 # What is Tincanz
 
